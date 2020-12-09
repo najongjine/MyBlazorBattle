@@ -3,23 +3,28 @@
 
 <div class="top-menu">
     <img src="icons/I_C_Banana.png" /><span class="popover-header">@BananaService.Bananas</span>
-    <AddBananas BananasAdded="AddBananas"/>
+    <AddBananas />
 </div>
 
 
 @code {
-    public int Bananas { get; set; } = 100;
-
-    public void AddBananas(int value)
-    {
-        Bananas += value;
-    }
+ 
+    /*
+    OnInitialized,Dispose 얘네는 쌍을 있어야됨
+    함수 외부에서 Service에 선언한 변수를 쓸려면 Service 에 public event Action OnChange 이걸 선언해주고
+    BananaService.OnChange += StateHasChanged 이걸 걸어주면 됨
+    */
     protected override void OnInitialized()
     {
+        Console.WriteLine("## Topmenu OnInitialized BananaService.OnChange += StateHasChanged ");
         BananaService.OnChange += StateHasChanged;
+
     }
     public void Dispose()
     {
+
+        Console.WriteLine("## Topmenu Dispose BananaService.OnChange -= StateHasChanged; ");
         BananaService.OnChange -= StateHasChanged;
+
     }
 }

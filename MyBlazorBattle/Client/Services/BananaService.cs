@@ -12,10 +12,26 @@ namespace MyBlazorBattle.Client.Services
 
         public void EatBananas(int amount)
         {
+            Console.WriteLine("## BananaService EatBananas");
             Bananas -= amount;
             //BananasChanged();
+
+            /*
+             * 바뀌었다는걸 알려주기
+             */
             OnChange.Invoke();
         }
 
+        public void AddBananas(int amount)
+        {
+            Console.WriteLine("## BananaService EatBananas");
+            Bananas += amount;
+            //BananasChanged();
+
+            /*
+             * 바뀌었다는걸 알려주기
+             */
+            OnChange.Invoke();
+        }
     }
 }
