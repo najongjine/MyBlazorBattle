@@ -1,23 +1,25 @@
 ﻿@page "/build"
 @inject MyBlazorBattle.Client.Services.IBananaService BananaService
+@inject MyBlazorBattle.Client.Services.IUnitService UnitService
 
 <h3>Build</h3>
 
 <!--
 바나나를 먹는 기능(EatBananas)과 그에 필요한 것들은 service로 다 빼놓고, service에 구현한 기능을 갔다 쓰는거다
 -->
-<button @onclick="()=>EatBananas(10)">Eat Bananas</button>
+<button @onclick="()=>BuildUnit()" class="btn btn-primary">Build</button>
 @code {
+    int selectedUnitId = 1;
     /*
     바나나를 먹는 기능(EatBananas)과 그에 필요한 것들은 service로 다 빼놓고, service에 구현한 기능을 갔다 쓰는거다
     Build 쪽에서 함수 하나를 만든 이유는 Service에 구현되어 있는 기능을 갔다 쓰기 위해서다.
     함수 안에서는 import 한 Service가 인식되고, service에 있는 변와 기능들에 쉽게 접근이 가능하다.
     */
-    private void EatBananas(int amount)
+    public void BuildUnit()
     {
-        var a = BananaService.Bananas;
-        Console.WriteLine("## Build EatBananas");
-        BananaService.EatBananas(amount);
+        MyBlazorBattle.Shared.Unit selectedUnit = UnitService.Units.FirstOrDefault(unit => unit.Id == selectedUnitId);
+        BananaService.EatBananas(selectedUnit.BananaCost);
+        UnitService.AddUnit(selectedUnitId);
     }
 
 }
