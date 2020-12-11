@@ -4,10 +4,18 @@
 
 <h3>Build</h3>
 
+<div>
+    <select @bind="selectedUnitId" class="form-control">
+        @foreach(var unit in UnitService.Units)
+        {
+            <option value="@unit.Id">@unit.Title // @unit.BananaCost Bananas </option>
+        }
+    </select>
+</div>
 <!--
 바나나를 먹는 기능(EatBananas)과 그에 필요한 것들은 service로 다 빼놓고, service에 구현한 기능을 갔다 쓰는거다
 -->
-<button @onclick="()=>BuildUnit()" class="btn btn-primary">Build</button>
+<button @onclick="BuildUnit" class="btn btn-primary">Build</button>
 @code {
     int selectedUnitId = 1;
     /*
