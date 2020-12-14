@@ -1,15 +1,46 @@
 ﻿@page "/build"
 @inject MyBlazorBattle.Client.Services.IBananaService BananaService
 @inject MyBlazorBattle.Client.Services.IUnitService UnitService
+@inject IToastService ToastService
 
 <h3>Build</h3>
-
+<div>
+    <select @bind="selectedUnitId" class="form-control">
+        @foreach (var unit in UnitService.Units)
+        {
+            <option value="@unit.Id">@unit.Title // @unit.BananaCost Bananas</option>
+        }
+    </select>
+</div>
 <!--
 바나나를 먹는 기능(EatBananas)과 그에 필요한 것들은 service로 다 빼놓고, service에 구현한 기능을 갔다 쓰는거다
 -->
 <button @onclick="()=>BuildUnit()" class="btn btn-primary">Build</button>
+
+@if (@needMoreBananas)
+{
+    <div class="validation-message">
+        Not enough Bananas :(
+    </div>
+}
 @code {
     int selectedUnitId = 1;
+    bool needMoreBananas = false;
+    /*
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("## Topmenu OnInitialized BananaService.OnChange += StateHasChanged ");
+        BananaService.OnChange += StateHasChanged;
+
+    }
+    public void Dispose()
+    {
+
+        Console.WriteLine("## Topmenu Dispose BananaService.OnChange -= StateHasChanged; ");
+        BananaService.OnChange -= StateHasChanged;
+
+    }
+    */
     /*
     바나나를 먹는 기능(EatBananas)과 그에 필요한 것들은 service로 다 빼놓고, service에 구현한 기능을 갔다 쓰는거다
     Build 쪽에서 함수 하나를 만든 이유는 Service에 구현되어 있는 기능을 갔다 쓰기 위해서다.
@@ -17,7 +48,15 @@
     */
     public void BuildUnit()
     {
+
         MyBlazorBattle.Shared.Unit selectedUnit = UnitService.Units.FirstOrDefault(unit => unit.Id == selectedUnitId);
+        if (BananaService.Bananas < 1 || BananaService.Bananas< selectedUnit.BananaCost)
+        {
+            needMoreBananas = true;
+            ToastService.ShowError("Not Enough Bananas!","");
+            return;
+        }
+        needMoreBananas = false;
         BananaService.EatBananas(selectedUnit.BananaCost);
         UnitService.AddUnit(selectedUnitId);
     }

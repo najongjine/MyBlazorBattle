@@ -1,4 +1,8 @@
 ﻿@inherits LayoutComponentBase
+@using Blazored.Toast.Configuration
+
+<!-- blazor toast 라는 기능을 아무데서나 쓸수있게 해줌 -->
+<BlazoredToasts/>
 
 <div class="page">
     <div class="sidebar">
@@ -13,5 +17,6 @@
         <div class="content px-4">
             @Body
         </div>
+
     </div>
 </div>

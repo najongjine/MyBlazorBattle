@@ -1,0 +1,29 @@
+﻿@page "/login"
+<h3>Login</h3>
+
+<EditForm Model="@user" OnValidSubmit="HandleLogin">
+    <DataAnnotationsValidator/>
+    <p>
+        <label>
+            Username
+        </label>
+        <div>
+            <InputText id="username" @bind-Value="user.Username"/>
+        </div>
+    </p>
+    <p>
+        <label>Password</label>
+        <div>
+            <InputText id="password" type="password" @bind-Value="user.Password"/>
+        </div>
+    </p>
+    <button class="btn btn-primary">Login</button>
+    <ValidationSummary/>
+</EditForm>
+@code {
+    private MyBlazorBattle.Shared.UserLogin user = new MyBlazorBattle.Shared.UserLogin();
+    private void HandleLogin() {
+        Console.WriteLine($"${user.Username}//${user.Password}");
+    }
+
+}

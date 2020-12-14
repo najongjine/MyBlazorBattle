@@ -24,7 +24,7 @@ namespace MyBlazorBattle.Client.Services
 
         public void AddBananas(int amount)
         {
-            Console.WriteLine("## BananaService EatBananas");
+            Console.WriteLine("## BananaService AddBananas");
             Bananas += amount;
             //BananasChanged();
 
