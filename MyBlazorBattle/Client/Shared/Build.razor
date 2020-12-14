@@ -16,13 +16,6 @@
 바나나를 먹는 기능(EatBananas)과 그에 필요한 것들은 service로 다 빼놓고, service에 구현한 기능을 갔다 쓰는거다
 -->
 <button @onclick="()=>BuildUnit()" class="btn btn-primary">Build</button>
-
-@if (@needMoreBananas)
-{
-    <div class="validation-message">
-        Not enough Bananas :(
-    </div>
-}
 @code {
     int selectedUnitId = 1;
     bool needMoreBananas = false;
